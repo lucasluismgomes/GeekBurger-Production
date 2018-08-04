@@ -18,7 +18,7 @@ namespace GeekBurger.Production.Extension
             context.SaveChanges();
 
             var productionTxt = File.ReadAllText("production.json");
-            var production = JsonConvert.DeserializeObject<List<Model.Production>>(productionTxt);
+            var production = JsonConvert.DeserializeObject<List<Model.ProductionArea>>(productionTxt);
 
             var storeTxt = File.ReadAllText("store.json");
             var store = JsonConvert.DeserializeObject<List<Model.Store>>(storeTxt);

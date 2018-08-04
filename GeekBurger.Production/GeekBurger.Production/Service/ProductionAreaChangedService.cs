@@ -43,7 +43,7 @@ namespace GeekBurger.Production.Service
             }
         }
 
-        public void AddToMessageList(IEnumerable<EntityEntry<Model.Production>> changes)
+        public void AddToMessageList(IEnumerable<EntityEntry<Model.ProductionArea>> changes)
         {
             _messages.AddRange(changes
             .Where(entity => entity.State != EntityState.Detached
@@ -51,9 +51,9 @@ namespace GeekBurger.Production.Service
             .Select(GetMessage).ToList());
         }
 
-        public Message GetMessage(EntityEntry<Production> entity)
+        public Message GetMessage(EntityEntry<Model.ProductionArea> entity)
         {
-            var productionChanged = Mapper.Map<ProductionAreaChanged>(entity); // TODO: renomear para ProductionAreaChangedMessage
+            var productionChanged = Mapper.Map<ProductionAreaChangedMessage>(entity);
             var productionChangedSerialized = JsonConvert.SerializeObject(productionChanged);
             var productionChangedByteArray = Encoding.UTF8.GetBytes(productionChangedSerialized);
 
@@ -61,7 +61,7 @@ namespace GeekBurger.Production.Service
             {
                 Body = productionChangedByteArray,
                 MessageId = Guid.NewGuid().ToString(),
-                Label = "" //TODO: substituir por -> productionChanged.Production.StoreId.ToString()
+                Label = productionChanged.Production.StoreId.ToString()
             };
         }
 

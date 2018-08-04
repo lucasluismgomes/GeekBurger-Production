@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace GeekBurger.Production.Model
 {
-    public class Production
+    public class ProductionArea
     {
         [Key]
-        public Guid ProductionId { get; set; }
+        public Guid ProductionAreaId { get; set; }
         public List<string> Restrictions { get; set; }
         public bool On { get; set; }
 
         public Store Store { get; set; }
 
         [ForeignKey("StoreId")]
-        public Guid IdStore { get; set; }
+        public Guid StoreId { get; set; }
     }
 }

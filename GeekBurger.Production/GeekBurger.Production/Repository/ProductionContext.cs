@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GeekBurger.Production;
+using GeekBurger.Production.Model;
 
 namespace GeekBurger.Production.Repository
 {
@@ -11,8 +12,8 @@ namespace GeekBurger.Production.Repository
     {
         public ProductionContext(DbContextOptions<ProductionContext> options) : base(options) { }
         
-        public DbSet<Model.Production> Production { get; set; }
-        public DbSet<Model.Store> Store { get; set; }
+        public DbSet<ProductionArea> Production { get; set; }
+        public DbSet<Store> Store { get; set; }
 
     }
 }

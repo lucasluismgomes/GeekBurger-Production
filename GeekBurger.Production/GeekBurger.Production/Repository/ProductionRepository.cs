@@ -13,17 +13,17 @@ namespace GeekBurger.Production.Repository
             _productionContext = context;
         }
 
-        public Model.Production GetProductionById(Guid id)
+        public ProductionArea GetProductionById(Guid id)
         {
-            return _productionContext.Production.Where(Z => Z.ProductionId == id).FirstOrDefault();
+            return _productionContext.Production.Where(Z => Z.ProductionAreaId == id).FirstOrDefault();
         }
 
-        public List<Model.Production> GetProductionByStore(Guid idStore)
+        public List<ProductionArea> GetProductionByStore(Guid idStore)
         {
-            return _productionContext.Production.Where(Z => Z.IdStore == idStore).ToList();
+            return _productionContext.Production.Where(Z => Z.StoreId == idStore).ToList();
         }
 
-        public List<Model.Production> ListProductions()
+        public List<ProductionArea> ListProductions()
         {
             return _productionContext.Production.ToList();
         }

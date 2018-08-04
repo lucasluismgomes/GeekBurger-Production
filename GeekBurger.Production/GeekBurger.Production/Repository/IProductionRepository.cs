@@ -6,8 +6,8 @@ namespace GeekBurger.Production.Repository
 {
     public interface IProductionRepository
     {
-        List<Model.Production> ListProductions();
-        Model.Production GetProductionById(Guid id);
-        List<Model.Production> GetProductionByStore(Guid idStore);
+        List<Model.ProductionArea> ListProductions();
+        Model.ProductionArea GetProductionById(Guid id);
+        List<Model.ProductionArea> GetProductionByStore(Guid idStore);
     }
 }

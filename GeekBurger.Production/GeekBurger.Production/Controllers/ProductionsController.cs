@@ -14,23 +14,6 @@ namespace GeekBurger.Production.Controllers
 
         public ProductionsController()
         {
-            ProductionAreas.AddRange(
-                new List<ProductionArea>
-                {
-                    new ProductionArea
-                    {
-                        ProductionId = new Guid("90f64d70-52bd-4039-bd26-454d94aff2e7"),
-                        Restrictions = new List<string>(){ "soy","dairy","gluten","peanut" },
-                        On = false
-                    },
-                    new ProductionArea
-                    {
-                        ProductionId = new Guid("6fa5817f-14db-4b2e-8591-490eb32c1495"),
-                        Restrictions = new List<string>(){ "dairy", "peanut" },
-                        On = false
-                    }
-                }
-            );
         }
 
         [HttpGet("areas")]

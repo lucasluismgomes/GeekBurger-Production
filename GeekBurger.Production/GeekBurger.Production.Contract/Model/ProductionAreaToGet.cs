@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 namespace GeekBurger.Production.Contract.Model
 {
-    public class ProductionAreaChanged
+    public class ProductionAreaToGet
     {
-        public Guid ProductionId { get; set; }
+        public Guid StoreId { get; set; }
+        public Guid ProductionAreaId { get; set; }
         public List<string> Restrictions { get; set; }
         public bool On { get; set; }
     }
