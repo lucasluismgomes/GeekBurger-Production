@@ -10,9 +10,8 @@ namespace GeekBurger.Production.Extension
 {
     public static class ProductionContextExtensions
     {
-        public static void Seed(this ProductionContext context)
+        public static void Seed(this ProductionsContext context)
         {
-
             context.Production.RemoveRange(context.Production);
             context.Store.RemoveRange(context.Store);
             context.SaveChanges();

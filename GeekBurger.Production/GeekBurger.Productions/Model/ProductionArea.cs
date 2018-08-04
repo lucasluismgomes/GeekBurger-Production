@@ -11,7 +11,8 @@ namespace GeekBurger.Production.Model
     {
         [Key]
         public Guid ProductionAreaId { get; set; }
-        public List<string> Restrictions { get; set; }
+
+        //public ICollection<string> Restrictions { get; set; } = new List<string>();
         public bool On { get; set; }
 
         public Store Store { get; set; }

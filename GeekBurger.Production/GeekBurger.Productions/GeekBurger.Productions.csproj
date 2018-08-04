@@ -7,7 +7,6 @@
   <ItemGroup>
     <Folder Include="Helper\" />
     <Folder Include="Service\" />
-    <Folder Include="Repository\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -25,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GeekBurger.Production.Contract\GeekBurger.Production.Contract.csproj" />
+    <ProjectReference Include="..\GeekBurger.Productions.Contract\GeekBurger.Productions.Contract.csproj" />
   </ItemGroup>
 
 </Project>

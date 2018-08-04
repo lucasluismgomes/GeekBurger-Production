@@ -7,8 +7,8 @@ namespace GeekBurger.Production.Repository
 {
     public class ProductionRepository : IProductionRepository
     {
-        private readonly ProductionContext _productionContext;
-        public ProductionRepository(ProductionContext context)
+        private readonly ProductionsContext _productionContext;
+        public ProductionRepository(ProductionsContext context)
         {
             _productionContext = context;
         }

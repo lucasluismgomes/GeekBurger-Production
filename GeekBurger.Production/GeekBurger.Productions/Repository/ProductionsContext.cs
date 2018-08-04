@@ -5,15 +5,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using GeekBurger.Production;
 using GeekBurger.Production.Model;
+using GeekBurger.Production.Extension;
 
 namespace GeekBurger.Production.Repository
 {
-    public class ProductionContext : DbContext
+    public class ProductionsContext : DbContext
     {
-        public ProductionContext(DbContextOptions<ProductionContext> options) : base(options) { }
+        public ProductionsContext(DbContextOptions<ProductionsContext> options) : base(options) { }
         
         public DbSet<ProductionArea> Production { get; set; }
         public DbSet<Store> Store { get; set; }
-
     }
 }
