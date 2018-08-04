@@ -29,20 +29,5 @@ namespace GeekBurger.Productions.Controllers
 
             return Ok(productionsToGet);
         }
-
-        [HttpGet("areas/{productionId}")]
-        public IActionResult GetAreaByProductionId(Guid productionId)
-        {
-            var productionArea = _productionsRepository.GetProductionById(productionId);
-
-            if (productionArea == null)
-            {
-                return NotFound();
-            }
-
-            var productionAreaToGet = _mapper.Map<ProductionAreaToGet>(productionArea);
-
-            return Ok(productionAreaToGet);
-        }
     }
 }

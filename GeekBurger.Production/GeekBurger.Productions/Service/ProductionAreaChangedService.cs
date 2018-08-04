@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GeekBurger.Productions.Contract;
+using GeekBurger.Productions.Model;
 using Microsoft.Azure.Management.ServiceBus.Fluent;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,7 @@ namespace GeekBurger.Productions.Service
 {
     public class ProductionAreaChangedService : IProductionAreaChangedService
     {
-        private const string Topic = "ProductionChangedTopic";
+        private const string Topic = "ProductionAreaChanged";
         private IConfiguration _configuration;
         private IMapper _mapper;
         private List<Message> _messages;
@@ -43,7 +44,7 @@ namespace GeekBurger.Productions.Service
             }
         }
 
-        public void AddToMessageList(IEnumerable<EntityEntry<Model.ProductionArea>> changes)
+        public void AddToMessageList(IEnumerable<EntityEntry<ProductionArea>> changes)
         {
             _messages.AddRange(changes
             .Where(entity => entity.State != EntityState.Detached
@@ -51,7 +52,7 @@ namespace GeekBurger.Productions.Service
             .Select(GetMessage).ToList());
         }
 
-        public Message GetMessage(EntityEntry<Model.ProductionArea> entity)
+        public Message GetMessage(EntityEntry<ProductionArea> entity)
         {
             var productionChanged = Mapper.Map<ProductionAreaChangedMessage>(entity);
             var productionChangedSerialized = JsonConvert.SerializeObject(productionChanged);

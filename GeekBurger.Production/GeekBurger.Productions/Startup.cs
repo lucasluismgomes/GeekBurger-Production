@@ -1,22 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using GeekBurger.Productions.Extension;
 using GeekBurger.Productions.Repository;
+using GeekBurger.Productions.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using GeekBurger.Productions.Extension;
-using GeekBurger.Productions.Service;
-using AutoMapper;
 
 namespace GeekBurger.Productions
 {
     public class Startup
     {
+        public static IConfiguration Configuration;
+
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
         public void ConfigureServices(IServiceCollection services)
         {
             var mvcCoreBuilder = services.AddMvc();
@@ -29,9 +32,9 @@ namespace GeekBurger.Productions
             services.AddAutoMapper();
 
             services.AddDbContext<ProductionsContext>(o => o.UseInMemoryDatabase("geekburger-production"));
-            services.AddTransient<IProductionAreaRepository, ProductionAreaRepository>();
-            services.AddTransient<IStoreRepository, StoreRepository>();
-            services.AddSingleton<IProductionAreaChangedService, ProductionAreaChangedService>();
+            services.AddScoped<IProductionAreaRepository, ProductionAreaRepository>();
+            services.AddScoped<IStoreRepository, StoreRepository>();
+            services.AddScoped<IProductionAreaChangedService, ProductionAreaChangedService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ProductionsContext productionsContext)
