@@ -9,6 +9,6 @@ namespace GeekBurger.Production.Service
     public interface IProductionAreaChangedService
     {
         void SendMessagesAsync();
-        //void AddToMessageList(IEnumerable<EntityEntry<ProductionArea>> changes);
+        void AddToMessageList(IEnumerable<EntityEntry<Production>> changes);
     }
 }
