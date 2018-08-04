@@ -1,42 +1,48 @@
-﻿using System;
+﻿using AutoMapper;
+using GeekBurger.Productions.Contract;
+using GeekBurger.Productions.Repository;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using GeekBurger.Production.Contract.Model;
-using GeekBurger.Production.Repository;
-using Microsoft.AspNetCore.Mvc;
 
-namespace GeekBurger.Production.Controllers
+namespace GeekBurger.Productions.Controllers
 {
     [Route("api/productions"), Produces("application/json")]
     public class ProductionsController : Controller
     {
-        private readonly IProductionRepository _productionRepository;
-        
-        public ProductionsController(IProductionRepository productionRepository)
+        private readonly IProductionAreaRepository _productionsRepository;
+        private readonly IMapper _mapper;
+
+        public ProductionsController(IProductionAreaRepository productionsRepository, IMapper mapper)
         {
-            _productionRepository = productionRepository;
+            _productionsRepository = productionsRepository;
+            _mapper = mapper;
         }
 
         [HttpGet("areas")]
-        public IActionResult GetAreas()
+        public IActionResult GetAreasFromStoreName([FromQuery] string storeName)
         {
-            var productions = _productionRepository.ListProductions();
+            var productionsAreas = _productionsRepository.GetProductionByStoreName(storeName).ToList();
 
-            return Ok(productions);
+            var productionsToGet = _mapper.Map<IEnumerable<ProductionAreaToGet>>(productionsAreas);
+
+            return Ok(productionsToGet);
         }
 
-        [HttpGet("areas/{productionid}")]
+        [HttpGet("areas/{productionId}")]
         public IActionResult GetAreaByProductionId(Guid productionId)
         {
-            var productionArea = _productionRepository.GetProductionById(productionId);
+            var productionArea = _productionsRepository.GetProductionById(productionId);
 
             if (productionArea == null)
             {
                 return NotFound();
             }
 
-            return Ok(productionArea);
+            var productionAreaToGet = _mapper.Map<ProductionAreaToGet>(productionArea);
+
+            return Ok(productionAreaToGet);
         }
     }
 }

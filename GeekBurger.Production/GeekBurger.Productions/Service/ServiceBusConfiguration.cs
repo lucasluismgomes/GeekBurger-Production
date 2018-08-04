@@ -1,4 +1,4 @@
-﻿namespace GeekBurger.Production.Service
+﻿namespace GeekBurger.Productions.Service
 {
     public class ServiceBusConfiguration
     {

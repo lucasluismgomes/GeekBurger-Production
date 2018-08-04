@@ -1,4 +1,4 @@
-﻿using GeekBurger.Production.Repository;
+﻿using GeekBurger.Productions.Repository;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -6,14 +6,14 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GeekBurger.Production.Extension
+namespace GeekBurger.Productions.Extension
 {
     public static class ProductionContextExtensions
     {
         public static void Seed(this ProductionsContext context)
         {
-            context.Production.RemoveRange(context.Production);
-            context.Store.RemoveRange(context.Store);
+            context.ProductionAreas.RemoveRange(context.ProductionAreas);
+            context.Stores.RemoveRange(context.Stores);
             context.SaveChanges();
 
             var productionTxt = File.ReadAllText("production.json");
@@ -22,8 +22,8 @@ namespace GeekBurger.Production.Extension
             var storeTxt = File.ReadAllText("store.json");
             var store = JsonConvert.DeserializeObject<List<Model.Store>>(storeTxt);
              
-            context.Store.AddRange(store);
-            context.Production.AddRange(production);
+            context.Stores.AddRange(store);
+            context.ProductionAreas.AddRange(production);
 
             context.SaveChanges();
         }

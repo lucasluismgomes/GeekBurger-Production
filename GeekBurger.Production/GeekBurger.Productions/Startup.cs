@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GeekBurger.Production.Repository;
+using GeekBurger.Productions.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using GeekBurger.Production.Extension;
+using GeekBurger.Productions.Extension;
+using GeekBurger.Productions.Service;
+using AutoMapper;
 
-namespace GeekBurger.Production
+namespace GeekBurger.Productions
 {
     public class Startup
     {
@@ -24,9 +26,12 @@ namespace GeekBurger.Production
                 c.SwaggerDoc("v1", new Info { Title = "Production", Version = "v1" });
             });
 
+            services.AddAutoMapper();
+
             services.AddDbContext<ProductionsContext>(o => o.UseInMemoryDatabase("geekburger-production"));
-            services.AddTransient<IProductionRepository, ProductionRepository>();
-            services.AddScoped<ProductionsContext, ProductionsContext>();
+            services.AddTransient<IProductionAreaRepository, ProductionAreaRepository>();
+            services.AddTransient<IStoreRepository, StoreRepository>();
+            services.AddSingleton<IProductionAreaChangedService, ProductionAreaChangedService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ProductionsContext productionsContext)

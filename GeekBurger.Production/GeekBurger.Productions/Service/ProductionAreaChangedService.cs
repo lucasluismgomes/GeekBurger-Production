@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using AutoMapper;
-using GeekBurger.Production.Contract.Model;
+﻿using AutoMapper;
+using GeekBurger.Productions.Contract;
 using Microsoft.Azure.Management.ServiceBus.Fluent;
 using Microsoft.Azure.ServiceBus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace GeekBurger.Production.Service
+namespace GeekBurger.Productions.Service
 {
     public class ProductionAreaChangedService : IProductionAreaChangedService
     {
@@ -61,7 +61,7 @@ namespace GeekBurger.Production.Service
             {
                 Body = productionChangedByteArray,
                 MessageId = Guid.NewGuid().ToString(),
-                Label = productionChanged.Production.StoreId.ToString()
+                Label = productionChanged.ProductionArea.StoreId.ToString()
             };
         }
 

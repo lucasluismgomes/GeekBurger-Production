@@ -1,19 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GeekBurger.Production;
-using GeekBurger.Production.Model;
-using GeekBurger.Production.Extension;
+﻿using GeekBurger.Productions.Model;
+using Microsoft.EntityFrameworkCore;
 
-namespace GeekBurger.Production.Repository
+namespace GeekBurger.Productions.Repository
 {
     public class ProductionsContext : DbContext
     {
         public ProductionsContext(DbContextOptions<ProductionsContext> options) : base(options) { }
-        
-        public DbSet<ProductionArea> Production { get; set; }
-        public DbSet<Store> Store { get; set; }
+        public DbSet<ProductionArea> ProductionAreas { get; set; }
+        public DbSet<Store> Stores { get; set; }
     }
 }

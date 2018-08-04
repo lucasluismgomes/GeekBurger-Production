@@ -3,16 +3,23 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace GeekBurger.Production.Model
+namespace GeekBurger.Productions.Model
 {
     public class ProductionArea
     {
         [Key]
         public Guid ProductionAreaId { get; set; }
 
-        //public ICollection<string> Restrictions { get; set; } = new List<string>();
+        [NotMapped]
+        public ICollection<string> Restrictions { get; set; }
+
+        public string RestrictionsList
+        {
+            get { return string.Join(",", Restrictions); }
+            set { Restrictions = value.Split(',').ToList(); }
+        }
+
         public bool On { get; set; }
 
         public Store Store { get; set; }

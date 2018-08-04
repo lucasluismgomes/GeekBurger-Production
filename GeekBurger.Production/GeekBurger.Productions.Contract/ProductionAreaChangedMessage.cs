@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace GeekBurger.Production.Contract.Model
+namespace GeekBurger.Productions.Contract
 {
     public class ProductionAreaChangedMessage
     {
         public Guid ProductionId { get; set; }
-        public ProductionAreaToGet Production { get; set; }
+        public ProductionAreaToGet ProductionArea { get; set; }
     }
 }

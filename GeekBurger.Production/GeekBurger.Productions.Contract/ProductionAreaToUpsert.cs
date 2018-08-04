@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace GeekBurger.Production.Contract.Model
+namespace GeekBurger.Productions.Contract
 {
     public class ProductionAreaToUpsert
     {
