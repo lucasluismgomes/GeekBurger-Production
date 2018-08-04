@@ -10,5 +10,6 @@ namespace GeekBurger.Production.Controllers
     [Route("api/production"), Produces("application/json")]
     public class ProductionController : Controller
     {
+
     }
 }
