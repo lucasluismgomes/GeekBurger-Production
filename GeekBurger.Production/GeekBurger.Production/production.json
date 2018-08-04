@@ -2,11 +2,26 @@
   {
     "ProductionId": "90f64d70-52bd-4039-bd26-454d94aff2e7",
     "Restrictions": [ "soy", "dairy", "gluten", "peanut" ],
-    "On": false
+    "On": false,
+    "IdStore": "8048e9ec-80fe-4bad-bc2a-e4f4a75c834e"
   },
   {
     "ProductionId": "6fa5817f-14db-4b2e-8591-490eb32c1495",
     "Restrictions": [ "dairy", "peanut" ],
-    "On": false
+    "On": false,
+    "IdStore": "8048e9ec-80fe-4bad-bc2a-e4f4a75c834e"
+  },
+
+  {
+    "ProductionId": "90f64d70-52bd-4039-bd26-454d94aff2e8",
+    "Restrictions": [ "soy", "gluten", "peanut" ],
+    "On": false,
+    "IdStore": "8d618778-85d7-411e-878b-846a8eef30c0"
+  },
+  {
+    "ProductionId": "6fa5817f-14db-4b2e-8591-490eb32c1498",
+    "Restrictions": [ "dairy" ],
+    "On": false,
+    "IdStore": "8d618778-85d7-411e-878b-846a8eef30c0"
   }
 ]
