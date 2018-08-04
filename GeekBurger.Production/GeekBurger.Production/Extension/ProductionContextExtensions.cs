@@ -14,11 +14,16 @@ namespace GeekBurger.Production.Extension
         {
 
             context.Production.RemoveRange(context.Production);
-
+            context.Store.RemoveRange(context.Store);
             context.SaveChanges();
 
             var productionTxt = File.ReadAllText("production.json");
-            var production = JsonConvert.DeserializeObject<List<Production>>(productionTxt);
+            var production = JsonConvert.DeserializeObject<List<Model.Production>>(productionTxt);
+
+            var storeTxt = File.ReadAllText("store.json");
+            var store = JsonConvert.DeserializeObject<List<Model.Store>>(storeTxt);
+             
+            context.Store.AddRange(store);
             context.Production.AddRange(production);
 
             context.SaveChanges();

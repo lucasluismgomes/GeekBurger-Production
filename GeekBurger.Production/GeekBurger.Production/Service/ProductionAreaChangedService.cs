@@ -38,7 +38,7 @@ namespace GeekBurger.Production.Service
             }
         }
 
-        public void AddToMessageList(IEnumerable<EntityEntry<Production>> changes)
+        public void AddToMessageList(IEnumerable<EntityEntry<Model.Production>> changes)
         {
             
         }
