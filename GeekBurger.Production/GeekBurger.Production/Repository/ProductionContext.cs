@@ -10,7 +10,7 @@ namespace GeekBurger.Production.Repository
     public class ProductionContext : DbContext
     {
         public ProductionContext(DbContextOptions<ProductionContext> options) : base(options) { }
-            
+        
         public DbSet<Production> Production { get; set; }
 
     }
