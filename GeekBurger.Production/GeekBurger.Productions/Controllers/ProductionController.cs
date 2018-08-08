@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using GeekBurger.Productions.Contract;
 using GeekBurger.Productions.Helper;
 using GeekBurger.Productions.Model;
 using GeekBurger.Productions.Repository;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace GeekBurger.Productions.Controllers
 {
@@ -24,10 +21,10 @@ namespace GeekBurger.Productions.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("areas", Name= "GetProductionArea")]
+        [HttpGet("areas", Name = "GetProductionArea")]
         public IActionResult GetProductionArea(Guid id)
         {
-            var productionArea = _productionAreaRepository.GetProductionById(id);
+            var productionArea = _productionAreaRepository.GetProductionAreaById(id);
 
             if (productionArea == null)
             {
@@ -55,9 +52,51 @@ namespace GeekBurger.Productions.Controllers
 
             var productionAreaToGet = _mapper.Map<ProductionAreaToGet>(productionArea);
 
-            return CreatedAtRoute("GetProduct",
+            return CreatedAtRoute("GetProductionArea",
                 new { id = productionAreaToGet.ProductionAreaId },
                 productionAreaToGet);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateProductionArea(Guid id, [FromBody] JsonPatchDocument<ProductionAreaToUpsert> productionAreaPatch)
+        {
+            if (productionAreaPatch == null || id == null || id == Guid.Empty)
+                return BadRequest();
+
+            ProductionArea productionArea = _productionAreaRepository.GetProductionAreaById(id);
+
+            if (productionArea == null)
+            {
+                return NotFound();
+            }
+
+            var productionAreaToUpdate = _mapper.Map<ProductionAreaToUpsert>(productionArea);
+            productionAreaPatch.ApplyTo<ProductionAreaToUpsert>(productionAreaToUpdate, ModelState);
+
+            productionArea = _mapper.Map(productionAreaToUpdate, productionArea);
+
+            if (productionArea.StoreId == Guid.Empty)
+                return new UnprocessableEntityResult(ModelState);
+
+            _productionAreaRepository.Update(productionArea);
+            _productionAreaRepository.Save();
+
+            var productionAreaToGet = _mapper.Map<ProductionAreaToGet>(productionArea);
+
+            return CreatedAtRoute("GetProductionArea",
+                new { id = productionAreaToGet.ProductionAreaId },
+                productionAreaToGet);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(Guid id)
+        {
+            var productionArea = _productionAreaRepository.GetProductionAreaById(id);
+
+            _productionAreaRepository.Remove(productionArea);
+            _productionAreaRepository.Save();
+
+            return NoContent();
         }
     }
 }
