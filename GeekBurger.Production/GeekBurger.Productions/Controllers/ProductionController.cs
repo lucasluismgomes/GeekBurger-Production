@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using GeekBurger.Productions.Contract;
 using GeekBurger.Productions.Helper;
 using GeekBurger.Productions.Model;
 using GeekBurger.Productions.Repository;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GeekBurger.Productions.Controllers
@@ -15,8 +11,8 @@ namespace GeekBurger.Productions.Controllers
     [Route("api/production"), Produces("application/json")]
     public class ProductionController : Controller
     {
-        private IProductionAreaRepository _productionAreaRepository;
-        private IMapper _mapper;
+        private readonly IProductionAreaRepository _productionAreaRepository;
+        private readonly IMapper _mapper;
 
         public ProductionController(IProductionAreaRepository productionAreaRepository, IStoreRepository storeRepository, IMapper mapper)
         {

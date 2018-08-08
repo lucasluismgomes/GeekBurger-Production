@@ -34,7 +34,8 @@ namespace GeekBurger.Productions
             services.AddDbContext<ProductionsContext>(o => o.UseInMemoryDatabase("geekburger-production"));
             services.AddScoped<IProductionAreaRepository, ProductionAreaRepository>();
             services.AddScoped<IStoreRepository, StoreRepository>();
-            services.AddScoped<IProductionAreaChangedService, ProductionAreaChangedService>();
+            services.AddSingleton<IProductionAreaChangedService, ProductionAreaChangedService>();
+            services.AddSingleton<ILogService, LogService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ProductionsContext productionsContext)
