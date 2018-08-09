@@ -7,9 +7,11 @@ namespace GeekBurger.Productions.Repository
     public interface IProductionAreaRepository
     {
         bool Add(ProductionArea productionArea);
-        List<ProductionArea> ListProductions();
-        ProductionArea GetProductionById(Guid id);
-        IEnumerable<ProductionArea> GetProductionByStoreName(string storeName);
+        List<ProductionArea> ListProductionAreas();
+        ProductionArea GetProductionAreaById(Guid id);
+        bool Update(ProductionArea productionArea);
+        void Remove(ProductionArea productionArea);
+        IEnumerable<ProductionArea> GetAvailableProductionAreaByStoreName(string storeName);
         void Save();
     }
 }

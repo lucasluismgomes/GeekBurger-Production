@@ -22,7 +22,7 @@ namespace GeekBurger.Productions.Controllers
         [HttpGet("areas")]
         public IActionResult GetAreasFromStoreName([FromQuery] string storeName)
         {
-            var productionsAreas = _productionsRepository.GetProductionByStoreName(storeName).ToList();
+            var productionsAreas = _productionsRepository.GetAvailableProductionAreaByStoreName(storeName).ToList();
 
             var productionsToGet = _mapper.Map<IEnumerable<ProductionAreaToGet>>(productionsAreas);
 

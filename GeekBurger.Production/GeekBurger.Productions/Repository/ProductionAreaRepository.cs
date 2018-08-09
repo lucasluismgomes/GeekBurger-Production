@@ -8,47 +8,62 @@ namespace GeekBurger.Productions.Repository
 {
     public class ProductionAreaRepository : IProductionAreaRepository
     {
-        private readonly ProductionsContext _productionContext;
+        private readonly ProductionsContext _context;
         private readonly IProductionAreaChangedService _productionAreaChangedService;
 
         public ProductionAreaRepository(ProductionsContext context, IProductionAreaChangedService productionAreaChangedService)
         {
-            _productionContext = context;
+            _context = context;
             _productionAreaChangedService = productionAreaChangedService;
         }
 
         public bool Add(ProductionArea productionArea)
         {
             productionArea.ProductionAreaId = Guid.NewGuid();
-            _productionContext.ProductionAreas.Add(productionArea);
+            _context.ProductionAreas.Add(productionArea);
             return true;
         }
-
-        public ProductionArea GetProductionById(Guid id)
+        
+        public ProductionArea GetProductionAreaById(Guid id)
         {
-            return _productionContext.ProductionAreas.Where(x => 
+            return _context.ProductionAreas.Where(x => 
                 x.ProductionAreaId == id).FirstOrDefault();
         }
 
-        public IEnumerable<ProductionArea> GetProductionByStoreName(string storeName)
+        public IEnumerable<ProductionArea> GetAvailableProductionAreaByStoreName(string storeName)
         {
-            return _productionContext.ProductionAreas.Where(x =>
-                x.Store.Name.Equals(storeName, StringComparison.InvariantCultureIgnoreCase)).ToList();
+            return _context.ProductionAreas.Where(x => x.Store.Name.Equals(storeName, StringComparison.InvariantCultureIgnoreCase)
+                && x.On).ToList();
         }
 
-        public List<ProductionArea> ListProductions()
+        public List<ProductionArea> ListProductionAreas()
         {
-            return _productionContext.ProductionAreas.ToList();
+            return _context.ProductionAreas.ToList();
+        }
+
+        public void Remove(ProductionArea productionArea)
+        {
+            _context.Remove(productionArea);
         }
 
         public void Save()
         {
             _productionAreaChangedService
-                .AddToMessageList(_productionContext.ChangeTracker.Entries<ProductionArea>());
+                .AddToMessageList(_context.ChangeTracker.Entries<ProductionArea>());
 
-            _productionContext.SaveChanges();
+            _context.SaveChanges();
 
             _productionAreaChangedService.SendMessagesAsync();
+        }
+
+        public bool Update(ProductionArea productionArea)
+        {
+            if (_context.ProductionAreas.FirstOrDefault(x => x.ProductionAreaId == productionArea.ProductionAreaId) == null)
+                return false;
+
+            _context.ProductionAreas.Update(productionArea);
+
+            return true;
         }
     }
 }
