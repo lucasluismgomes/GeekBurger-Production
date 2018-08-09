@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GeekBurger.Productions.Contract
+﻿namespace GeekBurger.Productions.Contract
 {
     public class ProductionAreaChangedMessage
     {

@@ -12,8 +12,8 @@ namespace GeekBurger.Productions.Controllers
     [Route("api/production"), Produces("application/json")]
     public class ProductionController : Controller
     {
-        private IProductionAreaRepository _productionAreaRepository;
-        private IMapper _mapper;
+        private readonly IProductionAreaRepository _productionAreaRepository;
+        private readonly IMapper _mapper;
 
         public ProductionController(IProductionAreaRepository productionAreaRepository, IStoreRepository storeRepository, IMapper mapper)
         {

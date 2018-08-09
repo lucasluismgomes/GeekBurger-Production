@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeekBurger.Productions", "G
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeekBurger.Productions.Contract", "GeekBurger.Productions.Contract\GeekBurger.Productions.Contract.csproj", "{28BAA1C5-6B8F-48EE-8617-AAFAD0CE2DB2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogMonitor", "LogMonitor\LogMonitor.csproj", "{03E3458B-6F3C-473F-B924-5D31493EFEB4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{28BAA1C5-6B8F-48EE-8617-AAFAD0CE2DB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28BAA1C5-6B8F-48EE-8617-AAFAD0CE2DB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28BAA1C5-6B8F-48EE-8617-AAFAD0CE2DB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03E3458B-6F3C-473F-B924-5D31493EFEB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03E3458B-6F3C-473F-B924-5D31493EFEB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03E3458B-6F3C-473F-B924-5D31493EFEB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03E3458B-6F3C-473F-B924-5D31493EFEB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
