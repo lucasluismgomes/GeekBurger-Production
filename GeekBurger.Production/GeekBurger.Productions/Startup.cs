@@ -34,11 +34,13 @@ namespace GeekBurger.Productions
             services.AddDbContext<ProductionsContext>(o => o.UseInMemoryDatabase("geekburger-production"));
             services.AddScoped<IProductionAreaRepository, ProductionAreaRepository>();
             services.AddScoped<IStoreRepository, StoreRepository>();
-            services.AddSingleton<IProductionAreaChangedService, ProductionAreaChangedService>();
-            services.AddSingleton<ILogService, LogService>();
+            services.AddScoped<IProductionAreaChangedService, ProductionAreaChangedService>();
+            services.AddScoped<ILogService, LogService>();
+            services.AddScoped<IOrderChangedService, OrderChangedService>();
+            services.AddScoped<INewOrderService, NewOrderService>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ProductionsContext productionsContext)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ProductionsContext productionsContext, INewOrderService newOrderService)
         {
             if (env.IsDevelopment())
             {
@@ -55,6 +57,8 @@ namespace GeekBurger.Productions
             });
 
             productionsContext.Seed();
+
+            newOrderService.SubscribeToTopic("NewOrder");
         }
     }
 }

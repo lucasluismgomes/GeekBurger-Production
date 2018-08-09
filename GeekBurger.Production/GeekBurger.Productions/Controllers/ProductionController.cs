@@ -57,7 +57,7 @@ namespace GeekBurger.Productions.Controllers
                 productionAreaToGet);
         }
 
-        [HttpPut("{id}")]
+        [HttpPatch("{id}")]
         public IActionResult UpdateProductionArea(Guid id, [FromBody] JsonPatchDocument<ProductionAreaToUpsert> productionAreaPatch)
         {
             if (productionAreaPatch == null || id == null || id == Guid.Empty)
