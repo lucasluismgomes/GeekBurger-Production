@@ -55,7 +55,7 @@ namespace GeekBurger.Productions.Service
 
                 if (rules.Any(x => x.Name == "$Default"))
                 {
-                    await subscriptionClient.RemoveRuleAsync("$Default");
+                    //await subscriptionClient.RemoveRuleAsync("$Default");
                 }
 
                 var messageHandlerOptions = new MessageHandlerOptions(ExceptionHandle) { AutoComplete = true };
@@ -81,7 +81,7 @@ namespace GeekBurger.Productions.Service
                 {
                     OrderId = new Guid(message.Label),
                     State = (OrderState)ProductionState.Finished,
-                    Valor = orderChanged.Valor,
+                    Value = orderChanged.Value,
                     StoreId = orderChanged.StoreId
                 };
 
