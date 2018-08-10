@@ -56,7 +56,7 @@ namespace GeekBurger.Productions.Service
 
         public Message GetMessage(EntityEntry<ProductionArea> entity)
         {
-            var productionChanged = Mapper.Map<ProductionAreaChangedMessage>(entity);
+            var productionChanged = _mapper.Map<ProductionAreaChangedMessage>(entity);
             var productionChangedSerialized = JsonConvert.SerializeObject(productionChanged);
             var productionChangedByteArray = Encoding.UTF8.GetBytes(productionChangedSerialized);
 

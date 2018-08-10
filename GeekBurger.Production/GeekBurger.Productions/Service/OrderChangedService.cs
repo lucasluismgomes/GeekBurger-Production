@@ -21,13 +21,15 @@ namespace GeekBurger.Productions.Service
         private List<Message> _messages;
         private Task _lastTask;
         private IServiceBusNamespace _namespace;
+        private readonly ILogService _logService;
 
-        public OrderChangedService(IMapper mapper, IConfiguration configuration)
+        public OrderChangedService(IMapper mapper, IConfiguration configuration, ILogService logService)
         {
             _mapper = mapper;
             _configuration = configuration;
             _messages = new List<Message>();
             _namespace = _configuration.GetServiceBusNamespace();
+            _logService = logService;
             EnsureTopicIsCreated();
         }
 
@@ -38,7 +40,6 @@ namespace GeekBurger.Productions.Service
                     .Equals(Topic, StringComparison.InvariantCultureIgnoreCase)))
                 _namespace.Topics.Define(Topic)
                     .WithSizeInMB(1024).Create();
-
         }
 
         public void AddToMessageList(OrderChangedMessage orderChanged)
@@ -66,6 +67,8 @@ namespace GeekBurger.Productions.Service
 
             var config = _configuration.GetSection("serviceBus").Get<ServiceBusConfiguration>();
             var topicClient = new TopicClient(config.ConnectionString, Topic);
+
+            _logService.SendMessagesAsync("Order finished in Production");
 
             _lastTask = SendAsync(topicClient);
 

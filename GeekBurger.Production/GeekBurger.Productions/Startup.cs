@@ -38,9 +38,11 @@ namespace GeekBurger.Productions
             services.AddScoped<ILogService, LogService>();
             services.AddScoped<IOrderChangedService, OrderChangedService>();
             services.AddScoped<INewOrderService, NewOrderService>();
+            services.AddScoped<IOrderPaidService, OrderPaidService>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ProductionsContext productionsContext, INewOrderService newOrderService)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ProductionsContext productionsContext,
+            INewOrderService newOrderService, IOrderPaidService orderPaidService)
         {
             if (env.IsDevelopment())
             {
@@ -59,6 +61,7 @@ namespace GeekBurger.Productions
             productionsContext.Seed();
 
             newOrderService.SubscribeToTopic("NewOrder");
+            orderPaidService.SubscribeToTopic("OrderChanged");
         }
     }
 }

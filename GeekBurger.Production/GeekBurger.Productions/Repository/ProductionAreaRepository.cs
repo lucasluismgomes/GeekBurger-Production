@@ -1,5 +1,6 @@
 ﻿using GeekBurger.Productions.Model;
 using GeekBurger.Productions.Service;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,5 +66,11 @@ namespace GeekBurger.Productions.Repository
 
             return true;
         }
+    }
+
+    public class ProductionAreaChanged
+    {
+        public EntityState State { get; set; }
+        public ProductionArea ProductionArea { get; set; }
     }
 }

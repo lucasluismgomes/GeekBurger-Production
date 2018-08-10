@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace GeekBurger.Productions.Service
 {
-    public class NewOrderService : INewOrderService
+    public class OrderPaidService : IOrderPaidService
     {
         private IConfiguration _configuration;
         private IServiceBusNamespace _namespace;
@@ -22,14 +22,14 @@ namespace GeekBurger.Productions.Service
         private const string SubscriptionName = "ProductionAreaSubscription";
         private readonly ILogService _logService;
 
-        public NewOrderService(IConfiguration configuration, IOrderChangedService orderChangedService, ILogService logService)
+        public OrderPaidService(IConfiguration configuration, IOrderChangedService orderChangedService, ILogService logService)
         {
             _configuration = configuration;
             _namespace = _configuration.GetServiceBusNamespace();
             _orderChangedService = orderChangedService;
             _logService = logService;
         }
-        
+
         public void SubscribeToTopic(string topicName)
         {
             var topic = _namespace.Topics.GetByName(topicName);
@@ -60,11 +60,11 @@ namespace GeekBurger.Productions.Service
 
                 var messageHandlerOptions = new MessageHandlerOptions(ExceptionHandle) { AutoComplete = true };
 
-                _logService.SendMessagesAsync("New Order Received in Production");
+                _logService.SendMessagesAsync("Order Changed Received in Production");
 
                 subscriptionClient.RegisterMessageHandler(Handle, messageHandlerOptions);
             }
-            catch(Exception)
+            catch (Exception)
             {
 
             }
@@ -72,22 +72,24 @@ namespace GeekBurger.Productions.Service
 
         private static Task Handle(Message message, CancellationToken arg2)
         {
-            var newOrderString = Encoding.UTF8.GetString(message.Body);
-            var newOrder = JsonConvert.DeserializeObject<OrderChangedMessage>(newOrderString);
+            var orderChangedString = Encoding.UTF8.GetString(message.Body);
+            var orderChanged = JsonConvert.DeserializeObject<OrderChangedMessage>(orderChangedString);
 
-            OrderChangedMessage orderReadyMessage = new OrderChangedMessage
+            if (orderChanged.State == OrderState.Paid)
             {
-                OrderId = new Guid(message.Label),
-                State = (OrderState)ProductionState.Ready,
-                Valor = newOrder.Valor,
-                StoreId = newOrder.StoreId
-            };
+                OrderChangedMessage orderFinishedMessage = new OrderChangedMessage
+                {
+                    OrderId = new Guid(message.Label),
+                    State = (OrderState)ProductionState.Finished,
+                    Valor = orderChanged.Valor,
+                    StoreId = orderChanged.StoreId
+                };
 
-            Random readyTime = new Random();
-            int seconds = readyTime.Next(5 * 1000, 21 * 1000);
-            Thread.Sleep(seconds);
+                // TODO: atribuir como status concluído apenas se o status de produção for READY
 
-            // TODO: persisitir a informação de READY para validação após o pagamento do pedido
+                _orderChangedService.AddToMessageList(orderFinishedMessage);
+                _orderChangedService.SendMessagesAsync();
+            }
 
             return Task.CompletedTask;
         }
